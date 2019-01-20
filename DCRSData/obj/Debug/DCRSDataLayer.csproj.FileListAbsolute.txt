@@ -1,0 +1,6 @@
+C:\Projetos\Trabalho\DCRSAdapter\DCRSData\bin\Debug\DCRSData.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSData\bin\Debug\DCRSData.pdb
+C:\Projetos\Trabalho\DCRSAdapter\DCRSData\obj\Debug\DCRSDataLayer.csprojAssemblyReference.cache
+C:\Projetos\Trabalho\DCRSAdapter\DCRSData\obj\Debug\DCRSDataLayer.csproj.CoreCompileInputs.cache
+C:\Projetos\Trabalho\DCRSAdapter\DCRSData\obj\Debug\DCRSData.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSData\obj\Debug\DCRSData.pdb

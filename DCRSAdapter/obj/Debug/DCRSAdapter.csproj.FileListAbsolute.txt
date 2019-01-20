@@ -1,0 +1,13 @@
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\DCRSAdapter.exe.config
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\DCRSAdapter.exe
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\DCRSAdapter.pdb
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\DCRSData.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\DCRSData.pdb
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.csprojAssemblyReference.cache
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.Form1.resources
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.Properties.Resources.resources
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.csproj.GenerateResource.cache
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.csproj.CoreCompileInputs.cache
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.csproj.CopyComplete
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.exe
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.pdb
