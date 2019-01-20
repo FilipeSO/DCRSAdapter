@@ -79,7 +79,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DCRSData\DCRSDataLayer.csproj">
+    <ProjectReference Include="..\DCRSDataLayer\DCRSDataLayer.csproj">
       <Project>{1941450d-6f8f-4ce6-8b7b-fc7fb345b3b2}</Project>
       <Name>DCRSDataLayer</Name>
     </ProjectReference>

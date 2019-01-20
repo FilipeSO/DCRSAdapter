@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCRSAdapter", "DCRSAdapter\DCRSAdapter.csproj", "{718806D1-D159-4EFB-91BB-4C189AE78C80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCRSDataLayer", "DCRSData\DCRSDataLayer.csproj", "{1941450D-6F8F-4CE6-8B7B-FC7FB345B3B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCRSDataLayer", "DCRSDataLayer\DCRSDataLayer.csproj", "{1941450D-6F8F-4CE6-8B7B-FC7FB345B3B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

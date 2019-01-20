@@ -19,7 +19,7 @@ namespace DCRSAdapter
             DCRSData DCRSData = new DCRSData(Environment.CurrentDirectory);
             try
             {
-                List<RecordModel> Records = DCRSData.GetRecords(new DateTime(2019, 1, 11), new DateTime(2019, 1, 18));
+                List<RecordModel> Records = DCRSData.GetRecords(new DateTime(2019, 1, 16), new DateTime(2019, 1, 18));
             }
             catch (Exception ex)
             {
