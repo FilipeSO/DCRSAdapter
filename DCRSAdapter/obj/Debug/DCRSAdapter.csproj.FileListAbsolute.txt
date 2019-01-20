@@ -11,3 +11,7 @@ C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.csproj.CoreCo
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.csproj.CopyComplete
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.exe
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.pdb
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\AudioFormatLib.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\NAudio.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\AudioFormatLib.pdb
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\NAudio.xml

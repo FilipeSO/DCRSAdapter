@@ -14,9 +14,9 @@ namespace DCRSDataLayer
     {
         private readonly string DCRSRoot;
 
-        public DCRSData(string root)
+        public DCRSData(string rootPath)
         {
-            DCRSRoot = root;
+            DCRSRoot = rootPath;
         }
 
         public List<RecordModel> GetRecords(DateTime dateStart, DateTime dateEnd)
@@ -51,7 +51,7 @@ namespace DCRSDataLayer
 
         private List<FileInfo> GetMDBFiles(DateTime dateStart, DateTime dateEnd)
         {
-            if ((dateEnd - dateStart).TotalDays > 3)
+            if ((dateEnd - dateStart).TotalDays > 2)
             {
                 throw new Exception("Intervalo selecionado superior a 2 dias. Valor limitado para evitar erro de leitura no DCRS.");
             }
