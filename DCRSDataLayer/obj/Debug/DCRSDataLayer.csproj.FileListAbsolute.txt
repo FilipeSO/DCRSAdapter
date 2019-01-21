@@ -6,7 +6,6 @@ C:\Projetos\Trabalho\DCRSAdapter\DCRSData\obj\Debug\DCRSData.dll
 C:\Projetos\Trabalho\DCRSAdapter\DCRSData\obj\Debug\DCRSData.pdb
 C:\Projetos\Trabalho\DCRSAdapter\DCRSDataLayer\bin\Debug\DCRSData.dll
 C:\Projetos\Trabalho\DCRSAdapter\DCRSDataLayer\bin\Debug\DCRSData.pdb
-C:\Projetos\Trabalho\DCRSAdapter\DCRSDataLayer\obj\Debug\DCRSDataLayer.csprojAssemblyReference.cache
 C:\Projetos\Trabalho\DCRSAdapter\DCRSDataLayer\obj\Debug\DCRSDataLayer.csproj.CoreCompileInputs.cache
 C:\Projetos\Trabalho\DCRSAdapter\DCRSDataLayer\obj\Debug\DCRSData.dll
 C:\Projetos\Trabalho\DCRSAdapter\DCRSDataLayer\obj\Debug\DCRSData.pdb

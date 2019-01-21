@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Relatório DCRS</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/moment-with-locales.min.js"></script>
+    <script src="js/vis.min.js"></script>
+    <link rel="stylesheet" href="css/vis.min.css">
+    <style>
+        audio {
+            height: 16px;
+            width: 100%;
+        }
+
+            audio:hover::-webkit-media-controls-play-button {
+                display: block !important;
+            }
+
+            audio:hover::-webkit-media-controls-current-time-display {
+                display: block !important;
+            }
+
+            audio:hover::-webkit-media-controls-time-remaining-display {
+                display: block !important;
+            }
+
+            audio::-webkit-media-controls-mute-button {
+                display: none !important;
+            }
+
+            audio::-webkit-media-controls-volume-slider {
+                display: none !important;
+            }
+
+            audio::-webkit-media-controls-current-time-display {
+                display: none !important;
+            }
+
+            audio::-webkit-media-controls-time-remaining-display {
+                display: none !important;
+            }
+
+            audio::-webkit-media-controls-play-button {
+                display: none !important;
+            }
+    </style>
+</head>
+<body>
+    <div id='visualization'></div>
+
+    <script>                
+        var container = document.getElementById('visualization');
+      
+//GROUPS_START
+
+//GROUPS_END
+
+        
+//ITEMS_START
+
+//ITEMS_END
+    
+        var options = {
+            locale: 'pt-br',
+            zoomMin: 60 * 1000, //60 segundos
+            zoomMax: 4* 60 * 60 * 1000 // 4 horas
+        };
+        var timeline = new vis.Timeline(container, items, groups, options);
+    </script>
+</body>
+</html>

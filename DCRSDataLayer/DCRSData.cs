@@ -51,10 +51,6 @@ namespace DCRSDataLayer
 
         private List<FileInfo> GetMDBFiles(DateTime dateStart, DateTime dateEnd)
         {
-            if ((dateEnd - dateStart).TotalDays > 2)
-            {
-                throw new Exception("Intervalo selecionado superior a 2 dias. Valor limitado para evitar erro de leitura no DCRS.");
-            }
             List<FileInfo> MDBFiles = new List<FileInfo>();
             for (DateTime date = dateStart; date.Date <= dateEnd.Date; date = date.AddDays(1))
             {
