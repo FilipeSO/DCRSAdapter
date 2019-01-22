@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblPingStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -57,7 +58,7 @@
             this.lblPingStatus});
             this.statusStrip.Location = new System.Drawing.Point(0, 270);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(237, 22);
+            this.statusStrip.Size = new System.Drawing.Size(248, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -70,15 +71,14 @@
             // lblPingStatus
             // 
             this.lblPingStatus.Name = "lblPingStatus";
-            this.lblPingStatus.Size = new System.Drawing.Size(87, 17);
-            this.lblPingStatus.Text = "Conectando. . .";
+            this.lblPingStatus.Size = new System.Drawing.Size(0, 17);
             // 
             // txtDCRSPath
             // 
             this.txtDCRSPath.Location = new System.Drawing.Point(120, 20);
             this.txtDCRSPath.Name = "txtDCRSPath";
             this.txtDCRSPath.ReadOnly = true;
-            this.txtDCRSPath.Size = new System.Drawing.Size(84, 20);
+            this.txtDCRSPath.Size = new System.Drawing.Size(98, 20);
             this.txtDCRSPath.TabIndex = 1;
             // 
             // label1
@@ -112,7 +112,7 @@
             // 
             this.btnEditar.Location = new System.Drawing.Point(9, 46);
             this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(195, 23);
+            this.btnEditar.Size = new System.Drawing.Size(209, 23);
             this.btnEditar.TabIndex = 9;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = true;
@@ -122,7 +122,7 @@
             // 
             this.btnStart.Location = new System.Drawing.Point(8, 98);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(195, 23);
+            this.btnStart.Size = new System.Drawing.Size(210, 23);
             this.btnStart.TabIndex = 10;
             this.btnStart.Text = "Visualizar Gravações";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -133,12 +133,12 @@
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(59, 19);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(100, 20);
+            this.dateTimePicker1.Size = new System.Drawing.Size(115, 20);
             this.dateTimePicker1.TabIndex = 11;
             // 
             // maskedTextBox1
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(165, 19);
+            this.maskedTextBox1.Location = new System.Drawing.Point(180, 19);
             this.maskedTextBox1.Mask = "00:00";
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.Size = new System.Drawing.Size(38, 20);
@@ -147,7 +147,7 @@
             // 
             // maskedTextBox2
             // 
-            this.maskedTextBox2.Location = new System.Drawing.Point(165, 45);
+            this.maskedTextBox2.Location = new System.Drawing.Point(180, 45);
             this.maskedTextBox2.Mask = "00:00";
             this.maskedTextBox2.Name = "maskedTextBox2";
             this.maskedTextBox2.Size = new System.Drawing.Size(38, 20);
@@ -159,7 +159,7 @@
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker2.Location = new System.Drawing.Point(59, 45);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(100, 20);
+            this.dateTimePicker2.Size = new System.Drawing.Size(115, 20);
             this.dateTimePicker2.TabIndex = 13;
             // 
             // comboBox1
@@ -170,7 +170,7 @@
             "Comercial"});
             this.comboBox1.Location = new System.Drawing.Point(59, 71);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(144, 21);
+            this.comboBox1.Size = new System.Drawing.Size(159, 21);
             this.comboBox1.TabIndex = 15;
             // 
             // label5
@@ -189,7 +189,7 @@
             this.groupBox1.Controls.Add(this.btnEditar);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(214, 84);
+            this.groupBox1.Size = new System.Drawing.Size(224, 84);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configuração";
@@ -207,7 +207,7 @@
             this.groupBox2.Controls.Add(this.dateTimePicker2);
             this.groupBox2.Location = new System.Drawing.Point(12, 102);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(214, 131);
+            this.groupBox2.Size = new System.Drawing.Size(224, 131);
             this.groupBox2.TabIndex = 18;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Seleção de Gravações";
@@ -216,10 +216,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(237, 292);
+            this.ClientSize = new System.Drawing.Size(248, 292);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "DCRS3497 Adaptador";
             this.statusStrip.ResumeLayout(false);

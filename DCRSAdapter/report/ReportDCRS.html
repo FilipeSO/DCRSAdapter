@@ -10,6 +10,25 @@
     <script src="js/vis.min.js"></script>
     <link rel="stylesheet" href="css/vis.min.css">
     <style>
+        body{
+            font-family: monospace;
+            font-size: 12pt;
+        }
+        .vis-item{
+            background-color: lightgray !important;
+            border-color: darkslategray !important;
+        }
+        .vis-item.vis-selected{
+            background-color: blue !important;
+            border-color: darkblue !important;
+        }
+        .menu{
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 10px;
+            z-index: 9999;
+        }
         audio {
             height: 16px;
             width: 100%;
@@ -49,26 +68,79 @@
     </style>
 </head>
 <body>
-    <div id='visualization'></div>
+    <div id='visualization'>
+        <div class="menu">
+            <input type="button" id="zoomIn" value="+" />
+            <input type="button" id="fit" value="100%" />
+            <input type="button" id="zoomOut" value="-" />
+            <input type="button" id="moveLeft" value="<" />
+            <input type="button" id="moveRight" value=">" />
+        </div>
+    </div>
+    <input type="datetime-local" id="dateTime" />
+    <input type="text" id="text" />
+    <input type="button" id="addMarker" value="Adicionar" />
 
-    <script>                
-        var container = document.getElementById('visualization');
-      
+
+    <script>
+
 //GROUPS_START
 
 //GROUPS_END
 
-        
 //ITEMS_START
 
 //ITEMS_END
-    
-        var options = {
-            locale: 'pt-br',
-            zoomMin: 60 * 1000, //60 segundos
-            zoomMax: 4* 60 * 60 * 1000 // 4 horas
-        };
-        var timeline = new vis.Timeline(container, items, groups, options);
+
+        $(document).ready(function () {
+            var container = document.getElementById('visualization');
+
+            var options = {
+                locale: 'pt-br',
+                height: '400px',
+                verticalScroll: true,
+                orientation: 'top'
+                //zoomMin: 60 * 1000, //60 segundos
+                //zoomMax: 4 * 60 * 60 * 1000 // 4 horas
+            };
+            groups.add([{ id: 'Marcador', content: 'Marcador' }]);
+            var timeline = new vis.Timeline(container, items, groups, options);
+            function move(percentage) {
+                var range = timeline.getWindow();
+                var interval = range.end - range.start;
+
+                timeline.setWindow({
+                    start: range.start.valueOf() - interval * percentage,
+                    end: range.end.valueOf() - interval * percentage
+                });
+            }
+            $("#zoomIn").click(function () {
+                timeline.zoomIn(1);
+            });
+            $("#zoomOut").click(function () {
+                timeline.zoomOut(1);
+            });
+            $("#fit").click(function () {
+                timeline.fit();
+            });
+            $("#moveLeft").click(function () {
+                move(-0.4);
+            });
+            $("#moveRight").click(function () {
+                move(0.4);
+            });
+            $("#addMarker").click(function () {
+                var text = $("#text").val();
+                var dateTime = new Date($("#dateTime").val());
+                items.add([{ id: text.length, content: text, start: dateTime, group: 'Marcador' }]);
+            });
+            timeline.on('select', function (properties) {
+                timeline.setSelection(properties.items[0], { focus: true })
+            });
+            //timeline.on('doubleClick', function (properties) {
+            //    timeline.zoomIn(1);
+            //});
+        });
     </script>
 </body>
 </html>

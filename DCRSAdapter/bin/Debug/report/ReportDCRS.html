@@ -10,6 +10,25 @@
     <script src="js/vis.min.js"></script>
     <link rel="stylesheet" href="css/vis.min.css">
     <style>
+        body{
+            font-family: monospace;
+            font-size: 12pt;
+        }
+        .vis-item{
+            background-color: lightgray !important;
+            border-color: darkslategray !important;
+        }
+        .vis-item.vis-selected{
+            background-color: blue !important;
+            border-color: darkblue !important;
+        }
+        .menu{
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 10px;
+            z-index: 9999;
+        }
         audio {
             height: 16px;
             width: 100%;
@@ -49,24 +68,77 @@
     </style>
 </head>
 <body>
-    <div id='visualization'></div>
+    <div id='visualization'>
+        <div class="menu">
+            <input type="button" id="zoomIn" value="+" />
+            <input type="button" id="fit" value="100%" />
+            <input type="button" id="zoomOut" value="-" />
+            <input type="button" id="moveLeft" value="<" />
+            <input type="button" id="moveRight" value=">" />
+        </div>
+    </div>
+    <input type="datetime-local" id="dateTime" />
+    <input type="text" id="text" />
+    <input type="button" id="addMarker" value="Adicionar" />
 
-    <script>                
-        var container = document.getElementById('visualization');
-      
-//GROUPS_STARTvar groups = new vis.DataSet([{"id":"MESA3 SF2","content":"MESA3 SF2"},{"id":"MESA2 H1","content":"MESA2 H1"},{"id":"MESA1 SF2","content":"MESA1 SF2"}]);
+
+    <script>
+
+//GROUPS_STARTvar groups = new vis.DataSet([{"id":"MESA3 SF2","content":"MESA3 SF2"},{"id":"MESA1 SF2","content":"MESA1 SF2"}]);
 //GROUPS_END
 
-        
-//ITEMS_STARTvar items = new vis.DataSet([{"id":34640832,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117161.807.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547749087000)\/","end":"\/Date(1547749123000)\/","group":"MESA3 SF2"},{"id":54444047,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117161.851.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547749131000)\/","end":"\/Date(1547749153000)\/","group":"MESA2 H1"},{"id":47891719,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117161.943.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547749183000)\/","end":"\/Date(1547749213000)\/","group":"MESA2 H1"},{"id":54024015,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117162.014.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547749214000)\/","end":"\/Date(1547749227000)\/","group":"MESA2 H1"},{"id":13869071,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117162.339.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547749419000)\/","end":"\/Date(1547749436000)\/","group":"MESA2 H1"},{"id":49652976,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117162.403.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547749443000)\/","end":"\/Date(1547749456000)\/","group":"MESA2 H1"},{"id":62468121,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117163.038.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547749838000)\/","end":"\/Date(1547749842000)\/","group":"MESA2 H1"},{"id":26753075,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117164.707.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547750827000)\/","end":"\/Date(1547750847000)\/","group":"MESA3 SF2"},{"id":19515494,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117164.858.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547750938000)\/","end":"\/Date(1547750942000)\/","group":"MESA3 SF2"},{"id":37251161,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117164.905.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547750945000)\/","end":"\/Date(1547750959000)\/","group":"MESA3 SF2"},{"id":64554036,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117164.925.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547750965000)\/","end":"\/Date(1547750985000)\/","group":"MESA2 H1"},{"id":61494432,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117164.946.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547750986000)\/","end":"\/Date(1547751002000)\/","group":"MESA2 H1"},{"id":14993092,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.009.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751009000)\/","end":"\/Date(1547751116000)\/","group":"MESA2 H1"},{"id":6480969,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.124.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751084000)\/","end":"\/Date(1547751119000)\/","group":"MESA3 SF2"},{"id":55196503,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.250.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751170000)\/","end":"\/Date(1547751208000)\/","group":"MESA2 H1"},{"id":41731733,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.312.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751192000)\/","end":"\/Date(1547751215000)\/","group":"MESA1 SF2"},{"id":24827179,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.324.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751204000)\/","end":"\/Date(1547751235000)\/","group":"MESA3 SF2"},{"id":64844482,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.348.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751228000)\/","end":"\/Date(1547751255000)\/","group":"MESA1 SF2"},{"id":17911681,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.503.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751303000)\/","end":"\/Date(1547751326000)\/","group":"MESA1 SF2"},{"id":41560081,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.708.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751428000)\/","end":"\/Date(1547751442000)\/","group":"MESA2 H1"},{"id":10923418,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.738.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751458000)\/","end":"\/Date(1547751483000)\/","group":"MESA3 SF2"},{"id":12381635,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.812.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751492000)\/","end":"\/Date(1547751518000)\/","group":"MESA3 SF2"},{"id":63388340,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.849.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751529000)\/","end":"\/Date(1547751545000)\/","group":"MESA2 H1"},{"id":34181910,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117165.912.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751552000)\/","end":"\/Date(1547751572000)\/","group":"MESA3 SF2"},{"id":17271312,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.021.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751621000)\/","end":"\/Date(1547751639000)\/","group":"MESA2 H1"},{"id":56799051,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.045.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751645000)\/","end":"\/Date(1547751672000)\/","group":"MESA2 H1"},{"id":37320431,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.133.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751693000)\/","end":"\/Date(1547751719000)\/","group":"MESA2 H1"},{"id":3056034,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.215.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751735000)\/","end":"\/Date(1547751762000)\/","group":"MESA2 H1"},{"id":46212239,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.223.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751743000)\/","end":"\/Date(1547751772000)\/","group":"MESA1 SF2"},{"id":52203868,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.310.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751790000)\/","end":"\/Date(1547751802000)\/","group":"MESA3 SF2"},{"id":654897,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.259.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751779000)\/","end":"\/Date(1547751803000)\/","group":"MESA1 SF2"},{"id":53046711,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.340.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751820000)\/","end":"\/Date(1547751824000)\/","group":"MESA1 SF2"},{"id":1816341,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.346.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751826000)\/","end":"\/Date(1547751858000)\/","group":"MESA1 SF2"},{"id":12905972,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.453.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751893000)\/","end":"\/Date(1547751930000)\/","group":"MESA1 SF2"},{"id":38750844,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.536.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751936000)\/","end":"\/Date(1547751946000)\/","group":"MESA3 SF2"},{"id":51810644,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.548.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547751948000)\/","end":"\/Date(1547751957000)\/","group":"MESA1 SF2"},{"id":35912612,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.652.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752012000)\/","end":"\/Date(1547752048000)\/","group":"MESA2 H1"},{"id":23240469,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.736.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752056000)\/","end":"\/Date(1547752071000)\/","group":"MESA2 H1"},{"id":3429838,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.754.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752074000)\/","end":"\/Date(1547752081000)\/","group":"MESA2 H1"},{"id":9381496,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.811.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752091000)\/","end":"\/Date(1547752111000)\/","group":"MESA1 SF2"},{"id":21703739,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.842.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752122000)\/","end":"\/Date(1547752128000)\/","group":"MESA1 SF2"},{"id":13172414,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.811.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752091000)\/","end":"\/Date(1547752142000)\/","group":"MESA2 H1"},{"id":60332585,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.849.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752129000)\/","end":"\/Date(1547752166000)\/","group":"MESA1 SF2"},{"id":55101221,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117170.952.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752192000)\/","end":"\/Date(1547752218000)\/","group":"MESA2 H1"},{"id":34013913,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.018.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752218000)\/","end":"\/Date(1547752229000)\/","group":"MESA3 SF2"},{"id":3663598,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.041.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752241000)\/","end":"\/Date(1547752262000)\/","group":"MESA3 SF2"},{"id":28316044,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.103.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752263000)\/","end":"\/Date(1547752334000)\/","group":"MESA3 SF2"},{"id":11898202,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.217.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752337000)\/","end":"\/Date(1547752364000)\/","group":"MESA3 SF2"},{"id":24230272,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.228.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752348000)\/","end":"\/Date(1547752367000)\/","group":"MESA1 SF2"},{"id":16495015,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.245.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752365000)\/","end":"\/Date(1547752381000)\/","group":"MESA3 SF2"},{"id":61027830,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.307.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752387000)\/","end":"\/Date(1547752401000)\/","group":"MESA3 SF2"},{"id":44307222,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.405.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752445000)\/","end":"\/Date(1547752463000)\/","group":"MESA1 SF2"},{"id":32115247,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.424.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752464000)\/","end":"\/Date(1547752476000)\/","group":"MESA2 H1"},{"id":51198184,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.426.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752466000)\/","end":"\/Date(1547752500000)\/","group":"MESA3 SF2"},{"id":53412201,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.448.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752488000)\/","end":"\/Date(1547752501000)\/","group":"MESA2 H1"},{"id":31421019,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.504.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752504000)\/","end":"\/Date(1547752511000)\/","group":"MESA2 H1"},{"id":62074597,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.503.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752503000)\/","end":"\/Date(1547752515000)\/","group":"MESA3 SF2"},{"id":61986480,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.525.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752525000)\/","end":"\/Date(1547752537000)\/","group":"MESA2 H1"},{"id":54848996,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.525.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752525000)\/","end":"\/Date(1547752560000)\/","group":"MESA3 SF2"},{"id":13583655,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19117171.621.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547752581000)\/","end":"\/Date(1547752646000)\/","group":"MESA3 SF2"}]);
+//ITEMS_STARTvar items = new vis.DataSet([{"id":49924125,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116164.535.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547664335000)\/","end":"\/Date(1547664372000)\/","group":"MESA1 SF2"},{"id":4831898,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116164.614.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547664374000)\/","end":"\/Date(1547664390000)\/","group":"MESA1 SF2"},{"id":50492551,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116164.632.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547664392000)\/","end":"\/Date(1547664422000)\/","group":"MESA1 SF2"},{"id":54181145,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.116.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665876000)\/","end":"\/Date(1547665896000)\/","group":"MESA1 SF2"},{"id":3129430,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.143.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665903000)\/","end":"\/Date(1547665907000)\/","group":"MESA1 SF2"},{"id":37901460,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.149.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665909000)\/","end":"\/Date(1547665918000)\/","group":"MESA1 SF2"},{"id":4436986,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.205.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665925000)\/","end":"\/Date(1547665931000)\/","group":"MESA1 SF2"},{"id":10553853,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.214.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665934000)\/","end":"\/Date(1547665960000)\/","group":"MESA1 SF2"},{"id":23737571,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116172.515.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547666715000)\/","end":"\/Date(1547666728000)\/","group":"MESA1 SF2"},{"id":66394946,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116172.531.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547666731000)\/","end":"\/Date(1547666749000)\/","group":"MESA1 SF2"},{"id":20706689,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116174.446.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547667886000)\/","end":"\/Date(1547667904000)\/","group":"MESA3 SF2"},{"id":4844372,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116174.506.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547667906000)\/","end":"\/Date(1547667920000)\/","group":"MESA3 SF2"},{"id":55993668,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116174.926.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547668166000)\/","end":"\/Date(1547668198000)\/","group":"MESA1 SF2"},{"id":64254500,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116175.004.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547668204000)\/","end":"\/Date(1547668218000)\/","group":"MESA1 SF2"},{"id":16294043,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116180.235.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547668955000)\/","end":"\/Date(1547668969000)\/","group":"MESA3 SF2"},{"id":5024928,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116180.304.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547668984000)\/","end":"\/Date(1547669022000)\/","group":"MESA3 SF2"},{"id":1401080,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116182.729.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547670449000)\/","end":"\/Date(1547670469000)\/","group":"MESA3 SF2"}]);
 //ITEMS_END
-    
-        var options = {
-            locale: 'pt-br',
-            zoomMin: 60 * 1000, //60 segundos
-            zoomMax: 4* 60 * 60 * 1000 // 4 horas
-        };
-        var timeline = new vis.Timeline(container, items, groups, options);
+
+        $(document).ready(function () {
+            var container = document.getElementById('visualization');
+
+            var options = {
+                locale: 'pt-br',
+                height: '400px',
+                verticalScroll: true,
+                orientation: 'top'
+                //zoomMin: 60 * 1000, //60 segundos
+                //zoomMax: 4 * 60 * 60 * 1000 // 4 horas
+            };
+            groups.add([{ id: 'Marcador', content: 'Marcador' }]);
+            var timeline = new vis.Timeline(container, items, groups, options);
+            function move(percentage) {
+                var range = timeline.getWindow();
+                var interval = range.end - range.start;
+
+                timeline.setWindow({
+                    start: range.start.valueOf() - interval * percentage,
+                    end: range.end.valueOf() - interval * percentage
+                });
+            }
+            $("#zoomIn").click(function () {
+                timeline.zoomIn(1);
+            });
+            $("#zoomOut").click(function () {
+                timeline.zoomOut(1);
+            });
+            $("#fit").click(function () {
+                timeline.fit();
+            });
+            $("#moveLeft").click(function () {
+                move(-0.4);
+            });
+            $("#moveRight").click(function () {
+                move(0.4);
+            });
+            $("#addMarker").click(function () {
+                var text = $("#text").val();
+                var dateTime = new Date($("#dateTime").val());
+                items.add([{ id: text.length, content: text, start: dateTime, group: 'Marcador' }]);
+            });
+            timeline.on('select', function (properties) {
+                timeline.setSelection(properties.items[0], { focus: true })
+            });
+            //timeline.on('doubleClick', function (properties) {
+            //    timeline.zoomIn(1);
+            //});
+        });
     </script>
 </body>
 </html>

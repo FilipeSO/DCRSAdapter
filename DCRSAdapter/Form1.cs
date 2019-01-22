@@ -12,9 +12,10 @@ using DCRSDataLayer;
 using AudioFormatLib;
 using System.Net.NetworkInformation;
 using System.Threading;
-using DCRSAdapter.Controls;
 using System.Web.Script.Serialization;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
+using DCRSAdapter.Properties;
 
 namespace DCRSAdapter
 {
@@ -60,7 +61,6 @@ namespace DCRSAdapter
                 end = s.RecordEnd,
                 group = s.AgentName
             });
-
             var serializer = new JavaScriptSerializer();
             string HTML = File.ReadAllText($"{reportDir}\\ReportDCRS.html");
             HTML = $"{HTML.Substring(0, HTML.IndexOf("GROUPS_START") + 13)}var groups = new vis.DataSet({serializer.Serialize(groupsData)});{HTML.Substring(HTML.IndexOf("\n//GROUPS_END"))}";
@@ -83,21 +83,21 @@ namespace DCRSAdapter
                 Ping ping = new Ping();      
                 try
                 {
-                    lblPingStatus.Text = $"Checando conexão com {txtDCRSPath.Text}";
-                    lblPingStatus.BackColor = Color.Gray;
+                    lblPingStatus.Image = Resources.conn_pcs_on_off.ToBitmap();
+                    lblPingStatus.Text = "";
                     await Task.Delay(1000, cancellationToken);
                     PingReply reply = ping.Send(txtDCRSPath.Text);
                     if (reply.Status == IPStatus.Success)
                     {
-                        lblPingStatus.Text = $"Conectado ({reply.RoundtripTime} ms)";
-                        lblPingStatus.BackColor = Color.DarkGreen;
+                        lblPingStatus.Image = Resources.conn_pcs_on_on.ToBitmap();
+                        lblPingStatus.Text = $" ({reply.RoundtripTime} ms)";
                     }
                     ping.Dispose();
                 }
                 catch (Exception)
                 {
-                    lblPingStatus.Text = "Não foi possível abrir conexão";
-                    lblPingStatus.BackColor = Color.Red;
+                    lblPingStatus.Image = Resources.conn_pcs_no_network.ToBitmap();
+                    lblPingStatus.Text = "";
                     ping.Dispose();
                 }        
                 await Task.Delay(interval, cancellationToken);
@@ -107,14 +107,14 @@ namespace DCRSAdapter
         private void btnEditar_Click(object sender, EventArgs e)
         {
             string input = Microsoft.VisualBasic.Interaction.InputBox("Insira novo endereço para DCRS", "Editar", "", -1, -1);
-            if (input != "")
+            if (input.Trim() != "")
             {
                 txtDCRSPath.Text = input;
                 File.WriteAllText($"{Environment.CurrentDirectory}\\config.cfg", input);
             }
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private async void btnStart_Click(object sender, EventArgs e)
         {
             try
             {
@@ -122,25 +122,32 @@ namespace DCRSAdapter
                 {
                     throw new Exception("Selecione o intervalo de interesse e origem");
                 }
-                DCRSData DCRSData = new DCRSData(Environment.CurrentDirectory); //LEMBRAR DE ALTERAR PARA DCRSPATH.TEXT para prod
-                DateTime sdateStart = DateTime.Parse($"{dateTimePicker1.Text} {maskedTextBox1.Text}");
-                DateTime sdateEnd = DateTime.Parse($"{dateTimePicker2.Text} {maskedTextBox2.Text}");
+
+                DCRSData DCRSData = new DCRSData(txtDCRSPath.Text);
+                DateTime dateStart = DateTime.Parse($"{dateTimePicker1.Text} {maskedTextBox1.Text}");
+                DateTime dateEnd = DateTime.Parse($"{dateTimePicker2.Text} {maskedTextBox2.Text}");
                 
-                if ((sdateEnd - sdateStart).TotalDays > 2)
+                if ((dateEnd - dateStart).TotalDays > 2)
                 {
                     throw new Exception("Intervalo de dias deve ser inferior a 2 dias");
                 }
-                List<RecordModel> Records = DCRSData.GetRecords(sdateStart,sdateEnd);
-
-                //ConvertRecordsToWav(Records);
-                if(comboBox1.SelectedIndex == 0) //turno
+                List<RecordModel> Records = DCRSData.GetRecords(dateStart,dateEnd);
+                List<RecordModel> filteredRecords = new List<RecordModel>();
+                if (comboBox1.SelectedIndex == 0) //turno
                 {
-                    CreateJsonTimelineData(Records.Where(w => w.RecordStart > sdateStart && w.RecordEnd < sdateEnd && w.AgentName.Contains("MESA")).ToList());
+                    filteredRecords = Records.Where(w => w.RecordStart > dateStart && w.RecordEnd < dateEnd && w.AgentName.Contains("MESA")).ToList();
                 }
                 else //comercial
                 {
-                    CreateJsonTimelineData(Records.Where(w => w.RecordStart > sdateStart && w.RecordEnd < sdateEnd && !w.AgentName.Contains("MESA")).ToList());
+                    filteredRecords = Records.Where(w => w.RecordStart > dateStart && w.RecordEnd < dateEnd && !w.AgentName.Contains("MESA")).ToList();
                 }
+                await Task.Run(() =>
+                {
+                    CreateJsonTimelineData(filteredRecords);
+                    //ConvertRecordsToWav(filteredRecords);
+                });
+                
+                Process.Start("chrome", $"{reportDir}\\ReportDCRS.html");
             }
             catch (Exception ex)
             {
