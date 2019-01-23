@@ -86,7 +86,7 @@ namespace DCRSAdapter
                     lblPingStatus.Image = Resources.conn_pcs_on_off.ToBitmap();
                     lblPingStatus.Text = "";
                     await Task.Delay(1000, cancellationToken);
-                    PingReply reply = ping.Send(txtDCRSPath.Text);
+                    PingReply reply = ping.Send(txtDCRSPath.Text.Replace("\\",""));
                     if (reply.Status == IPStatus.Success)
                     {
                         lblPingStatus.Image = Resources.conn_pcs_on_on.ToBitmap();
