@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>conn_dialup.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AudioFormatLib">
       <HintPath>..\..\VoxToWav\AudioFormatLib\bin\Debug\AudioFormatLib.dll</HintPath>
@@ -91,6 +94,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="conn_dialup.ico" />
     <Content Include="report\css\vis.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -100,9 +104,10 @@
     <Content Include="report\js\moment-with-locales.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="report\js\vis.min.js">
+    <Content Include="report\js\vis.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="report\js\vis.min.js" />
     <Content Include="report\ReportDCRS.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

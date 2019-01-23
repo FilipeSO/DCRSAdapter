@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <title>Relatório DCRS</title>
     <script src="js/jquery.min.js"></script>
     <script src="js/moment-with-locales.min.js"></script>
-    <script src="js/vis.min.js"></script>
+    <script src="js/vis.js"></script>
     <link rel="stylesheet" href="css/vis.min.css">
     <style>
         body{
@@ -84,12 +84,15 @@
 
     <script>
 
-//GROUPS_STARTvar groups = new vis.DataSet([{"id":"MESA3 SF2","content":"MESA3 SF2"},{"id":"MESA1 SF2","content":"MESA1 SF2"}]);
+//GROUPS_START
+
 //GROUPS_END
 
-//ITEMS_STARTvar items = new vis.DataSet([{"id":49924125,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116164.535.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547664335000)\/","end":"\/Date(1547664372000)\/","group":"MESA1 SF2"},{"id":4831898,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116164.614.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547664374000)\/","end":"\/Date(1547664390000)\/","group":"MESA1 SF2"},{"id":50492551,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116164.632.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547664392000)\/","end":"\/Date(1547664422000)\/","group":"MESA1 SF2"},{"id":54181145,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.116.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665876000)\/","end":"\/Date(1547665896000)\/","group":"MESA1 SF2"},{"id":3129430,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.143.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665903000)\/","end":"\/Date(1547665907000)\/","group":"MESA1 SF2"},{"id":37901460,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.149.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665909000)\/","end":"\/Date(1547665918000)\/","group":"MESA1 SF2"},{"id":4436986,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.205.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665925000)\/","end":"\/Date(1547665931000)\/","group":"MESA1 SF2"},{"id":10553853,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116171.214.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547665934000)\/","end":"\/Date(1547665960000)\/","group":"MESA1 SF2"},{"id":23737571,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116172.515.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547666715000)\/","end":"\/Date(1547666728000)\/","group":"MESA1 SF2"},{"id":66394946,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116172.531.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547666731000)\/","end":"\/Date(1547666749000)\/","group":"MESA1 SF2"},{"id":20706689,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116174.446.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547667886000)\/","end":"\/Date(1547667904000)\/","group":"MESA3 SF2"},{"id":4844372,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116174.506.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547667906000)\/","end":"\/Date(1547667920000)\/","group":"MESA3 SF2"},{"id":55993668,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116174.926.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547668166000)\/","end":"\/Date(1547668198000)\/","group":"MESA1 SF2"},{"id":64254500,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116175.004.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547668204000)\/","end":"\/Date(1547668218000)\/","group":"MESA1 SF2"},{"id":16294043,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116180.235.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547668955000)\/","end":"\/Date(1547668969000)\/","group":"MESA3 SF2"},{"id":5024928,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116180.304.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547668984000)\/","end":"\/Date(1547669022000)\/","group":"MESA3 SF2"},{"id":1401080,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19116182.729.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547670449000)\/","end":"\/Date(1547670469000)\/","group":"MESA3 SF2"}]);
-//ITEMS_END
+//ITEMS_START
 
+//ITEMS_END
+        var timeline;
+        var jsonTitle = [];
         $(document).ready(function () {
             var container = document.getElementById('visualization');
 
@@ -101,8 +104,7 @@
                 //zoomMin: 60 * 1000, //60 segundos
                 //zoomMax: 4 * 60 * 60 * 1000 // 4 horas
             };
-            groups.add([{ id: 'Marcador', content: 'Marcador' }]);
-            var timeline = new vis.Timeline(container, items, groups, options);
+            timeline = new vis.Timeline(container, items, groups, options);
             function move(percentage) {
                 var range = timeline.getWindow();
                 var interval = range.end - range.start;
@@ -128,12 +130,20 @@
                 move(0.4);
             });
             $("#addMarker").click(function () {
-                var text = $("#text").val();
+                var title = $("#text").val();
                 var dateTime = new Date($("#dateTime").val());
-                items.add([{ id: text.length, content: text, start: dateTime, group: 'Marcador' }]);
+                var id = 'custombar' + Math.floor(Math.random() * 100);
+                timeline.addCustomTime(dateTime, id);
+                var jsonObj = { id: id, title: title };
+                jsonTitle.push(jsonObj);
             });
             timeline.on('select', function (properties) {
                 timeline.setSelection(properties.items[0], { focus: true })
+            });
+            timeline.on('itemover', function (properties) {
+                for (var i = 0; i < jsonTitle.length; i++) {
+                    $("."+ jsonTitle[i].id).prop("title", jsonTitle[i].title);
+                }
             });
             //timeline.on('doubleClick', function (properties) {
             //    timeline.zoomIn(1);

@@ -69,10 +69,10 @@ namespace DCRSAdapter
         }
 
         private void ConvertRecordsToWav(List<RecordModel> records)
-        {
+        {   
             foreach (var item in records)
             {
-                Vox2Wav.Decode(item.RecordFile.FullName, $"{reportDir}\\audio\\{item.RecordFile.Name}.wav",true);                    
+                Vox2Wav.Decode(item.RecordFile.FullName, $"{reportDir}\\audio\\{item.RecordFile.Name}.wav", true);
             }
         }
 
@@ -144,7 +144,7 @@ namespace DCRSAdapter
                 await Task.Run(() =>
                 {
                     CreateJsonTimelineData(filteredRecords);
-                    //ConvertRecordsToWav(filteredRecords);
+                    ConvertRecordsToWav(filteredRecords);
                 });
                 
                 Process.Start("chrome", $"{reportDir}\\ReportDCRS.html");

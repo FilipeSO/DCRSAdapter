@@ -17,6 +17,6 @@ C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.exe
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.pdb
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\css\vis.min.css
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\js\moment-with-locales.min.js
-C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\js\vis.min.js
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\ReportDCRS.html
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\js\jquery.min.js
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\js\vis.js

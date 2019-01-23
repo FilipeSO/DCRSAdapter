@@ -7,7 +7,7 @@
     <title>Relatório DCRS</title>
     <script src="js/jquery.min.js"></script>
     <script src="js/moment-with-locales.min.js"></script>
-    <script src="js/vis.min.js"></script>
+    <script src="js/vis.js"></script>
     <link rel="stylesheet" href="css/vis.min.css">
     <style>
         body{
@@ -91,7 +91,8 @@
 //ITEMS_START
 
 //ITEMS_END
-
+        var timeline;
+        var jsonTitle = [];
         $(document).ready(function () {
             var container = document.getElementById('visualization');
 
@@ -103,8 +104,7 @@
                 //zoomMin: 60 * 1000, //60 segundos
                 //zoomMax: 4 * 60 * 60 * 1000 // 4 horas
             };
-            groups.add([{ id: 'Marcador', content: 'Marcador' }]);
-            var timeline = new vis.Timeline(container, items, groups, options);
+            timeline = new vis.Timeline(container, items, groups, options);
             function move(percentage) {
                 var range = timeline.getWindow();
                 var interval = range.end - range.start;
@@ -130,12 +130,20 @@
                 move(0.4);
             });
             $("#addMarker").click(function () {
-                var text = $("#text").val();
+                var title = $("#text").val();
                 var dateTime = new Date($("#dateTime").val());
-                items.add([{ id: text.length, content: text, start: dateTime, group: 'Marcador' }]);
+                var id = 'custombar' + Math.floor(Math.random() * 100);
+                timeline.addCustomTime(dateTime, id);
+                var jsonObj = { id: id, title: title };
+                jsonTitle.push(jsonObj);
             });
             timeline.on('select', function (properties) {
                 timeline.setSelection(properties.items[0], { focus: true })
+            });
+            timeline.on('itemover', function (properties) {
+                for (var i = 0; i < jsonTitle.length; i++) {
+                    $("."+ jsonTitle[i].id).prop("title", jsonTitle[i].title);
+                }
             });
             //timeline.on('doubleClick', function (properties) {
             //    timeline.zoomIn(1);
