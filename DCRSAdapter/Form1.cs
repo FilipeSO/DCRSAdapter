@@ -93,8 +93,7 @@ namespace DCRSAdapter
                         lblProgress.Text = $"Gravação {toolStripProgressBar1.Value} de {records.Count()}";
                     }));
                 }
-                Thread.Sleep(200);
-                //Vox2Wav.Decode(item.RecordFile.FullName, $"{folderBrowserDialog1.SelectedPath}\\audio\\{item.RecordFile.Name}.wav", true);
+                Vox2Wav.Decode(item.RecordFile.FullName, $"{folderBrowserDialog1.SelectedPath}\\audio\\{item.RecordFile.Name}.wav", true);
             }
         }
 
