@@ -61,10 +61,21 @@ namespace DCRSAdapter
                 end = s.RecordEnd,
                 group = s.AgentName
             });
+            var titlesData = (from DataGridViewRow row in dataGridView1.Rows
+                              select new
+                              {
+                                  id = "custombar" + row.Cells[1].GetHashCode(),
+                                  dateTime = row.Cells[0].Value,
+                                  title = row.Cells[1].Value
+                              });            
             var serializer = new JavaScriptSerializer();
             string HTML = File.ReadAllText($"{reportDir}\\ReportDCRS.html");
             HTML = $"{HTML.Substring(0, HTML.IndexOf("GROUPS_START") + 13)}var groups = new vis.DataSet({serializer.Serialize(groupsData)});{HTML.Substring(HTML.IndexOf("\n//GROUPS_END"))}";
-            HTML = $"{HTML.Substring(0, HTML.IndexOf("ITEMS_START") + 12)}var items = new vis.DataSet({serializer.Serialize(itemsData)});{HTML.Substring(HTML.IndexOf("\n//ITEMS_END"))}";   
+
+            HTML = $"{HTML.Substring(0, HTML.IndexOf("ITEMS_START") + 12)}var items = new vis.DataSet({serializer.Serialize(itemsData)});{HTML.Substring(HTML.IndexOf("\n//ITEMS_END"))}";
+
+            HTML = $"{HTML.Substring(0, HTML.IndexOf("TITLES_START") + 13)}var titles = {serializer.Serialize(titlesData)};{HTML.Substring(HTML.IndexOf("\n//TITLES_END"))}";
+
             File.WriteAllText($"{reportDir}\\ReportDCRS.html", HTML);
         }
 
@@ -133,7 +144,12 @@ namespace DCRSAdapter
                 }
                 List<RecordModel> Records = DCRSData.GetRecords(dateStart,dateEnd);
                 List<RecordModel> filteredRecords = new List<RecordModel>();
-                if (comboBox1.SelectedIndex == 0) //turno
+
+                if (comboBox1.SelectedIndex == 0) //completo
+                {
+                    filteredRecords = Records.Where(w => w.RecordStart > dateStart && w.RecordEnd < dateEnd).ToList();
+                }
+                else if (comboBox1.SelectedIndex == 1) //turno
                 {
                     filteredRecords = Records.Where(w => w.RecordStart > dateStart && w.RecordEnd < dateEnd && w.AgentName.Contains("MESA")).ToList();
                 }
@@ -144,7 +160,7 @@ namespace DCRSAdapter
                 await Task.Run(() =>
                 {
                     CreateJsonTimelineData(filteredRecords);
-                    ConvertRecordsToWav(filteredRecords);
+                    //ConvertRecordsToWav(filteredRecords);
                 });
                 
                 Process.Start("chrome", $"{reportDir}\\ReportDCRS.html");
@@ -153,6 +169,11 @@ namespace DCRSAdapter
             {
                 MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Add(DateTime.Parse($"{dateTimePicker3.Text} {maskedTextBox3.Text}"), txtTitle.Text);
         }
     }
 }

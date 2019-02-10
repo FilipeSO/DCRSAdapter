@@ -77,9 +77,9 @@
             <input type="button" id="moveRight" value=">" />
         </div>
     </div>
-    <input type="datetime-local" id="dateTime" />
-    <input type="text" id="text" />
-    <input type="button" id="addMarker" value="Adicionar" />
+    <!--<input type="datetime-local" id="dateTime" />
+    <input type="text" id="text" />-->
+    <!--<input type="button" id="addMarker" value="Adicionar" />-->
 
 
     <script>
@@ -91,8 +91,11 @@
 //ITEMS_START
 
 //ITEMS_END
+
+//TITLES_START
+
+//TITLES_END
         var timeline;
-        var jsonTitle = [];
         $(document).ready(function () {
             var container = document.getElementById('visualization');
 
@@ -105,6 +108,17 @@
                 //zoomMax: 4 * 60 * 60 * 1000 // 4 horas
             };
             timeline = new vis.Timeline(container, items, groups, options);
+            $.each(titles, function (i, item) { //add custom timebars
+                timeline.addCustomTime(item.dateTime, item.id);
+            });
+            $.each(timeline.customTimes, function (i, item) { //lock custom timebars
+                item.hammer.off("panstart panmove panend");
+            });
+            setInterval(function () { //force timebar tooltip update
+                for (var i = 0; i < titles.length; i++) {
+                    $("." + titles[i].id).prop("title", titles[i].title);
+                }
+            }, 2000);
             function move(percentage) {
                 var range = timeline.getWindow();
                 var interval = range.end - range.start;
@@ -129,26 +143,33 @@
             $("#moveRight").click(function () {
                 move(0.4);
             });
-            $("#addMarker").click(function () {
-                var title = $("#text").val();
-                var dateTime = new Date($("#dateTime").val());
-                var id = 'custombar' + Math.floor(Math.random() * 100);
-                timeline.addCustomTime(dateTime, id);
-                var jsonObj = { id: id, title: title };
-                jsonTitle.push(jsonObj);
-            });
+            //$("#addMarker").click(function () {
+            //    var title = $("#text").val();
+            //    var dateTime = new Date($("#dateTime").val());
+            //    var id = 'custombar' + Math.floor(Math.random() * 100);
+            //    timeline.addCustomTime(dateTime, id);
+            //    var jsonObj = { id: id, title: title };
+            //    jsonTitle.push(jsonObj);
+            //});
             timeline.on('select', function (properties) {
                 timeline.setSelection(properties.items[0], { focus: true })
             });
-            timeline.on('itemover', function (properties) {
-                for (var i = 0; i < jsonTitle.length; i++) {
-                    $("."+ jsonTitle[i].id).prop("title", jsonTitle[i].title);
-                }
-            });
+            //timeline.on("timechanged", function (properties) {
+            //    selected = titles.filter(function (item) {
+            //        return item.id === properties.id;
+            //    });
+            //    properties.time = selected[0].dateTime;
+            //});
+            //timeline.on('itemover', function (properties) {
+            //    for (var i = 0; i < jsonTitle.length; i++) {
+            //        $("."+ jsonTitle[i].id).prop("title", jsonTitle[i].title);
+            //    }
+            //});
             //timeline.on('doubleClick', function (properties) {
             //    timeline.zoomIn(1);
             //});
         });
+
     </script>
 </body>
 </html>

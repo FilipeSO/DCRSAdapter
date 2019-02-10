@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -77,22 +77,22 @@
             <input type="button" id="moveRight" value=">" />
         </div>
     </div>
-    <input type="datetime-local" id="dateTime" />
-    <input type="text" id="text" />
-    <input type="button" id="addMarker" value="Adicionar" />
+    <!--<input type="datetime-local" id="dateTime" />
+    <input type="text" id="text" />-->
+    <!--<input type="button" id="addMarker" value="Adicionar" />-->
 
 
     <script>
 
-//GROUPS_START
-
+//GROUPS_STARTvar groups = new vis.DataSet([{"id":"MESA4 H1","content":"MESA4 H1"},{"id":"MESA2 H1","content":"MESA2 H1"},{"id":"MESA1 SF2","content":"MESA1 SF2"}]);
 //GROUPS_END
 
-//ITEMS_START
-
+//ITEMS_STARTvar items = new vis.DataSet([{"id":41773672,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114091.737.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547464657000)\/","end":"\/Date(1547464671000)\/","group":"MESA2 H1"},{"id":34361009,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114091.759.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547464679000)\/","end":"\/Date(1547464691000)\/","group":"MESA4 H1"},{"id":53710617,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114091.820.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547464700000)\/","end":"\/Date(1547464708000)\/","group":"MESA4 H1"},{"id":64062224,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114091.832.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547464712000)\/","end":"\/Date(1547464733000)\/","group":"MESA4 H1"},{"id":65718035,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114091.854.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547464734000)\/","end":"\/Date(1547464761000)\/","group":"MESA4 H1"},{"id":57733168,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114095.355.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547466835000)\/","end":"\/Date(1547466893000)\/","group":"MESA1 SF2"},{"id":26067845,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114095.754.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547467074000)\/","end":"\/Date(1547467102000)\/","group":"MESA1 SF2"},{"id":20304321,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114095.830.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547467110000)\/","end":"\/Date(1547467316000)\/","group":"MESA1 SF2"},{"id":28726945,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114101.035.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547467835000)\/","end":"\/Date(1547467911000)\/","group":"MESA1 SF2"},{"id":52116595,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114101.154.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547467914000)\/","end":"\/Date(1547468041000)\/","group":"MESA1 SF2"},{"id":32187286,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114101.423.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547468063000)\/","end":"\/Date(1547468068000)\/","group":"MESA2 H1"},{"id":34622967,"content":"\u003caudio controls\u003e\u003csource src=\u0027audio/19114101.431.wav\u0027 type=\u0027audio/wav\u0027\u003e\u003caudio\u003e","start":"\/Date(1547468071000)\/","end":"\/Date(1547468084000)\/","group":"MESA2 H1"}]);
 //ITEMS_END
+
+//TITLES_STARTvar titles = [{"id":"custombar64254500","dateTime":"\/Date(1547466000000)\/","title":"IPS INÍCIO"},{"id":"custombar16294043","dateTime":"\/Date(1547466300000)\/","title":"IPS MEIO"},{"id":"custombar5024928","dateTime":"\/Date(1547466600000)\/","title":"IPS FIM"}];
+//TITLES_END
         var timeline;
-        var jsonTitle = [];
         $(document).ready(function () {
             var container = document.getElementById('visualization');
 
@@ -105,6 +105,17 @@
                 //zoomMax: 4 * 60 * 60 * 1000 // 4 horas
             };
             timeline = new vis.Timeline(container, items, groups, options);
+            $.each(titles, function (i, item) { //add custom timebars
+                timeline.addCustomTime(item.dateTime, item.id);
+            });
+            $.each(timeline.customTimes, function (i, item) { //lock custom timebars
+                item.hammer.off("panstart panmove panend");
+            });
+            setInterval(function () { //force timebar tooltip update
+                for (var i = 0; i < titles.length; i++) {
+                    $("." + titles[i].id).prop("title", titles[i].title);
+                }
+            }, 2000);
             function move(percentage) {
                 var range = timeline.getWindow();
                 var interval = range.end - range.start;
@@ -129,26 +140,33 @@
             $("#moveRight").click(function () {
                 move(0.4);
             });
-            $("#addMarker").click(function () {
-                var title = $("#text").val();
-                var dateTime = new Date($("#dateTime").val());
-                var id = 'custombar' + Math.floor(Math.random() * 100);
-                timeline.addCustomTime(dateTime, id);
-                var jsonObj = { id: id, title: title };
-                jsonTitle.push(jsonObj);
-            });
+            //$("#addMarker").click(function () {
+            //    var title = $("#text").val();
+            //    var dateTime = new Date($("#dateTime").val());
+            //    var id = 'custombar' + Math.floor(Math.random() * 100);
+            //    timeline.addCustomTime(dateTime, id);
+            //    var jsonObj = { id: id, title: title };
+            //    jsonTitle.push(jsonObj);
+            //});
             timeline.on('select', function (properties) {
                 timeline.setSelection(properties.items[0], { focus: true })
             });
-            timeline.on('itemover', function (properties) {
-                for (var i = 0; i < jsonTitle.length; i++) {
-                    $("."+ jsonTitle[i].id).prop("title", jsonTitle[i].title);
-                }
-            });
+            //timeline.on("timechanged", function (properties) {
+            //    selected = titles.filter(function (item) {
+            //        return item.id === properties.id;
+            //    });
+            //    properties.time = selected[0].dateTime;
+            //});
+            //timeline.on('itemover', function (properties) {
+            //    for (var i = 0; i < jsonTitle.length; i++) {
+            //        $("."+ jsonTitle[i].id).prop("title", jsonTitle[i].title);
+            //    }
+            //});
             //timeline.on('doubleClick', function (properties) {
             //    timeline.zoomIn(1);
             //});
         });
+
     </script>
 </body>
 </html>
