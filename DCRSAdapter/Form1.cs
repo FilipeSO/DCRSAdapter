@@ -27,8 +27,8 @@ namespace DCRSAdapter
         {
             InitializeComponent();
             this.Load += Form1_Load;
-            Directory.CreateDirectory(reportDir.FullName);
-            Directory.CreateDirectory($"{reportDir.FullName}\\audio");
+            //Directory.CreateDirectory(reportDir.FullName);
+            //Directory.CreateDirectory($"{reportDir.FullName}\\audio");
         }
 
 
@@ -37,6 +37,8 @@ namespace DCRSAdapter
             maskedTextBox1.Text = DateTime.Now.AddHours(-1).ToString("HHmm");
             maskedTextBox2.Text = DateTime.Now.ToString("HHmm");
             comboBox1.SelectedIndex = 0;
+            toolStripProgressBar1.Visible = false;
+            lblProgress.Visible = false;
 
             if (File.Exists($"{Environment.CurrentDirectory}\\config.cfg"))
             {
@@ -69,21 +71,30 @@ namespace DCRSAdapter
                                   title = row.Cells[1].Value
                               });            
             var serializer = new JavaScriptSerializer();
-            string HTML = File.ReadAllText($"{reportDir}\\ReportDCRS.html");
+            string HTML = File.ReadAllText($"{folderBrowserDialog1.SelectedPath}\\ReportDCRS.html");
             HTML = $"{HTML.Substring(0, HTML.IndexOf("GROUPS_START") + 13)}var groups = new vis.DataSet({serializer.Serialize(groupsData)});{HTML.Substring(HTML.IndexOf("\n//GROUPS_END"))}";
 
             HTML = $"{HTML.Substring(0, HTML.IndexOf("ITEMS_START") + 12)}var items = new vis.DataSet({serializer.Serialize(itemsData)});{HTML.Substring(HTML.IndexOf("\n//ITEMS_END"))}";
 
             HTML = $"{HTML.Substring(0, HTML.IndexOf("TITLES_START") + 13)}var titles = {serializer.Serialize(titlesData)};{HTML.Substring(HTML.IndexOf("\n//TITLES_END"))}";
 
-            File.WriteAllText($"{reportDir}\\ReportDCRS.html", HTML);
+            File.WriteAllText($"{folderBrowserDialog1.SelectedPath}\\ReportDCRS.html", HTML);
         }
 
         private void ConvertRecordsToWav(List<RecordModel> records)
-        {   
-            foreach (var item in records)
+        {
+             foreach (var item in records)
             {
-                Vox2Wav.Decode(item.RecordFile.FullName, $"{reportDir}\\audio\\{item.RecordFile.Name}.wav", true);
+                if (this.InvokeRequired)
+                {
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        toolStripProgressBar1.Value += 1;
+                        lblProgress.Text = $"Gravação {toolStripProgressBar1.Value} de {records.Count()}";
+                    }));
+                }
+                Thread.Sleep(200);
+                //Vox2Wav.Decode(item.RecordFile.FullName, $"{folderBrowserDialog1.SelectedPath}\\audio\\{item.RecordFile.Name}.wav", true);
             }
         }
 
@@ -129,10 +140,11 @@ namespace DCRSAdapter
         {
             try
             {
-                if(dateTimePicker1.Text == "" || dateTimePicker2.Text == "" || maskedTextBox1.Text == "" || maskedTextBox2.Text == "" || comboBox1.SelectedIndex == -1)
-                {
-                    throw new Exception("Selecione o intervalo de interesse e origem");
-                }
+                DialogResult result = folderBrowserDialog1.ShowDialog();
+                if (result != DialogResult.OK) throw new Exception("Selecione uma pasta destino para criar a visualização");
+                new Microsoft.VisualBasic.Devices.Computer().FileSystem.CopyDirectory(reportDir.FullName, folderBrowserDialog1.SelectedPath);
+
+                if (dateTimePicker1.Text == "" || dateTimePicker2.Text == "" || maskedTextBox1.Text == "" || maskedTextBox2.Text == "" || comboBox1.SelectedIndex == -1) throw new Exception("Selecione o intervalo de interesse e origem");
 
                 DCRSData DCRSData = new DCRSData(txtDCRSPath.Text);
                 DateTime dateStart = DateTime.Parse($"{dateTimePicker1.Text} {maskedTextBox1.Text}");
@@ -157,13 +169,26 @@ namespace DCRSAdapter
                 {
                     filteredRecords = Records.Where(w => w.RecordStart > dateStart && w.RecordEnd < dateEnd && !w.AgentName.Contains("MESA")).ToList();
                 }
-                await Task.Run(() =>
+                toolStripProgressBar1.Visible = true;
+                lblProgress.Visible = true;
+                toolStripProgressBar1.Maximum = filteredRecords.Count();
+                toolStripProgressBar1.Value = 0;
+                foreach (Control control in this.Controls)
                 {
+                    control.Enabled = false;
+                }
+                await Task.Run(() =>
+                {                    
                     CreateJsonTimelineData(filteredRecords);
-                    //ConvertRecordsToWav(filteredRecords);
+                    ConvertRecordsToWav(filteredRecords);
                 });
-                
-                Process.Start("chrome", $"{reportDir}\\ReportDCRS.html");
+                foreach (Control control in this.Controls)
+                {
+                    control.Enabled = true;
+                }
+                toolStripProgressBar1.Visible = false;
+                lblProgress.Visible = false;
+                Process.Start("chrome", string.Format("\"{0}\"", $"{folderBrowserDialog1.SelectedPath.ToString()}\\ReportDCRS.html"));
             }
             catch (Exception ex)
             {
