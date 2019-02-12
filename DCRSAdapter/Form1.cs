@@ -192,6 +192,12 @@ namespace DCRSAdapter
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                foreach (Control control in this.Controls)
+                {
+                    control.Enabled = true;
+                }
+                toolStripProgressBar1.Visible = false;
+                lblProgress.Visible = false;
             }
         }
 
