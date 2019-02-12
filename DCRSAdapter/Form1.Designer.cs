@@ -92,7 +92,7 @@
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(400, 16);
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(350, 16);
             // 
             // lblProgress
             // 
