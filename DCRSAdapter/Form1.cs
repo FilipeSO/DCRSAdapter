@@ -32,7 +32,7 @@ namespace DCRSAdapter
             //Directory.CreateDirectory($"{reportDir.FullName}\\audio");
         }
 
-        private void DataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void DataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -40,16 +40,19 @@ namespace DCRSAdapter
                 {
                     lblProgress.Text = "Carregando gravação";
                     lblProgress.Visible = true;
+                    dataGridView2.Enabled = false;
                     FileInfo recordFile = new FileInfo(dataGridView2[3, e.RowIndex].Value.ToString());
                     if (!Directory.Exists($"{Path.GetTempPath()}\\DCRS_audio")) Directory.CreateDirectory($"{Path.GetTempPath()}\\DCRS_audio");
-                    Vox2Wav.Decode(recordFile.FullName, $"{Path.GetTempPath()}\\DCRS_audio\\{recordFile.Name}.wav", true);
+                    await Task.Run(()=> Vox2Wav.Decode(recordFile.FullName, $"{Path.GetTempPath()}\\DCRS_audio\\{recordFile.Name}.wav", true));
                     axWindowsMediaPlayer1.URL = $"{Path.GetTempPath()}\\DCRS_audio\\{recordFile.Name}.wav";
                     axWindowsMediaPlayer1.Ctlcontrols.play();
+                    dataGridView2.Enabled = true;
                     lblProgress.Visible = false; 
                 }
             }
             catch (Exception ex)
             {
+                dataGridView2.Enabled = true;
                 MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
