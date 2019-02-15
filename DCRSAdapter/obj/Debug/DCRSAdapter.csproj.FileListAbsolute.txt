@@ -20,3 +20,8 @@ C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\js\moment-with-loc
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\ReportDCRS.html
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\js\jquery.min.js
 C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\report\js\vis.js
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\Interop.WMPLib.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\bin\Debug\AxInterop.WMPLib.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\Interop.WMPLib.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\AxInterop.WMPLib.dll
+C:\Projetos\Trabalho\DCRSAdapter\DCRSAdapter\obj\Debug\DCRSAdapter.csproj.ResolveComReference.cache

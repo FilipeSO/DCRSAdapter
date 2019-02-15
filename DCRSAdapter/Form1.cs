@@ -27,10 +27,15 @@ namespace DCRSAdapter
         {
             InitializeComponent();
             this.Load += Form1_Load;
+            this.dataGridView2.CellClick += DataGridView2_CellClick;
             //Directory.CreateDirectory(reportDir.FullName);
             //Directory.CreateDirectory($"{reportDir.FullName}\\audio");
         }
 
+        private void DataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //MessageBox.Show("ok");
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -204,6 +209,49 @@ namespace DCRSAdapter
         private void btnAdd_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Add(DateTime.Parse($"{dateTimePicker3.Text} {maskedTextBox3.Text}"), txtTitle.Text);
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dateTimePicker1.Text == "" || dateTimePicker2.Text == "" || maskedTextBox1.Text == "" || maskedTextBox2.Text == "" || comboBox1.SelectedIndex == -1) throw new Exception("Selecione o intervalo de interesse e origem");
+
+                DCRSData DCRSData = new DCRSData(txtDCRSPath.Text);
+                DateTime dateStart = DateTime.Parse($"{dateTimePicker1.Text} {maskedTextBox1.Text}");
+                DateTime dateEnd = DateTime.Parse($"{dateTimePicker2.Text} {maskedTextBox2.Text}");
+
+                List<RecordModel> Records = DCRSData.GetRecords(dateStart, dateEnd);
+                List<RecordModel> filteredRecords = new List<RecordModel>();
+
+                if (comboBox1.SelectedIndex == 0) //completo
+                {
+                    filteredRecords = Records.Where(w => w.RecordStart > dateStart && w.RecordEnd < dateEnd).ToList();
+                }
+                else if (comboBox1.SelectedIndex == 1) //turno
+                {
+                    filteredRecords = Records.Where(w => w.RecordStart > dateStart && w.RecordEnd < dateEnd && w.AgentName.Contains("MESA")).ToList();
+                }
+                else //comercial
+                {
+                    filteredRecords = Records.Where(w => w.RecordStart > dateStart && w.RecordEnd < dateEnd && !w.AgentName.Contains("MESA")).ToList();
+                }
+                dataGridView2.DataSource = filteredRecords.Select(s => new
+                {
+                    s.RecordStart,
+                    s.AgentName,
+                    s.Duration,
+                    s.RecordFile
+                }).ToList();
+                dataGridView2.Columns[0].HeaderText = "Início";
+                dataGridView2.Columns[1].HeaderText = "Origem";
+                dataGridView2.Columns[2].HeaderText = "Duração (s)";
+                dataGridView2.Columns[3].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
