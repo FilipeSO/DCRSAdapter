@@ -34,7 +34,10 @@ namespace DCRSAdapter
 
         private void DataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //MessageBox.Show("ok");
+            FileInfo recordFile = new FileInfo(dataGridView2[3, e.RowIndex].Value.ToString());
+            Vox2Wav.Decode(recordFile.FullName, $"{Path.GetTempPath()}\\DCRSaudio\\{recordFile.Name}.wav", true);
+            axWindowsMediaPlayer1.URL = $"{Path.GetTempPath()}\\DCRSaudio\\{recordFile.Name}.wav";
+            axWindowsMediaPlayer1.Ctlcontrols.play();
         }
 
         private void Form1_Load(object sender, EventArgs e)
