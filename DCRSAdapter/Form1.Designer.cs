@@ -284,10 +284,10 @@
             // axWindowsMediaPlayer1
             // 
             this.axWindowsMediaPlayer1.Enabled = true;
-            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(6, 142);
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(6, 116);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(556, 47);
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(556, 73);
             this.axWindowsMediaPlayer1.TabIndex = 1;
             // 
             // dataGridView2
@@ -300,7 +300,7 @@
             this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(556, 149);
+            this.dataGridView2.Size = new System.Drawing.Size(556, 104);
             this.dataGridView2.TabIndex = 0;
             // 
             // tabPage2
